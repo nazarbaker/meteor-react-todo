@@ -7,13 +7,13 @@ export default class Task extends Component {
 
   toggleChecked() {
     // Set the checked property to the opposite of its current value
-    // запис в базу
+    // запис в базу чи чекнутий пункт
     Tasks.update(this.props.task._id, {
       $set: { checked: !this.props.task.checked },
     });
   }
 
-  // видалення з бази
+  // видалення пункту з бази
   deleteThisTask() {
     Tasks.remove(this.props.task._id);
   }
@@ -21,6 +21,7 @@ export default class Task extends Component {
   render() {
     // Give tasks a different className when they are checked off,
     // so that we can style them nicely in CSS
+    // береться з бази чи чекед чи не чекед
     const taskClassName = this.props.task.checked ? 'checked' : '';
 
     return (
@@ -38,7 +39,9 @@ export default class Task extends Component {
           onClick={this.toggleChecked.bind(this)}
         />
 
-        <span className="text">{this.props.task.text}</span>
+        <span className="text">
+          <strong>{this.props.task.username}</strong>: {this.props.task.text}
+        </span>
       </li>
     );
   }
